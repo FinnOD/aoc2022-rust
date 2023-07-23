@@ -9,6 +9,10 @@ impl Range {
     fn sym_contains(&self, other: &Range) -> bool {
         self.contains(other) | other.contains(self)
     }
+
+    fn overlaps(&self, other: &Range) -> bool {
+        self.0 <= other.1 && other.0 <= self.1
+    }
 }
 
 pub fn answer(input: &str) -> String {
@@ -25,7 +29,7 @@ pub fn answer(input: &str) -> String {
         })
         .collect();
         
-        let sym_contains = *(&ranges[0].sym_contains(&ranges[1]));
+        let sym_contains = *(&ranges[0].overlaps(&ranges[1]));
 
 
         let res = if sym_contains {
